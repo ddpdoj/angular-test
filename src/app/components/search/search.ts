@@ -1,10 +1,10 @@
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, OnInit, signal, OnDestroy, Output, EventEmitter } from '@angular/core';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { debounceTime, distinctUntilChanged, of, switchMap } from 'rxjs';
+import { Subject, takeUntil, tap } from 'rxjs';
 
 @Component({
   selector: 'app-search',
@@ -12,22 +12,21 @@ import { debounceTime, distinctUntilChanged, of, switchMap } from 'rxjs';
   templateUrl: './search.html',
   styleUrl: './search.scss'
 })
-export class Search implements OnInit {
+export class Search implements OnInit, OnDestroy {
+  @Output() searchControlValue = new EventEmitter();
+
   searchControl = new FormControl();
-  searchTerm = signal('');
+  destroyed$ = new Subject();
 
   ngOnInit() {
+    this.searchControlValue.emit(this.searchControl.valueChanges)
     this.searchControl.valueChanges
-      .pipe(
-        debounceTime(300),
-        distinctUntilChanged()
-      )
-      .subscribe(searchTerm => {
-        console.log(searchTerm)
-      })
+      .pipe(takeUntil(this.destroyed$))
+      .subscribe();
   }
 
-  searchTermChanged() {
-    console.log(this.searchTerm);
+  ngOnDestroy() {
+    this.destroyed$.next(1);
+    this.destroyed$.complete();
   }
 }

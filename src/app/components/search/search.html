@@ -2,8 +2,8 @@
   <mat-form-field class="example-form-field" appearance="outline">
     <mat-label>Clearable input</mat-label>
     <input matInput type="text" [formControl]="searchControl">
-    @if (searchTerm()) {
-      <button matSuffix matIconButton aria-label="Clear" (click)="searchTerm.set('')">
+    @if (searchControl.getRawValue()) {
+      <button matSuffix matIconButton aria-label="Clear" (click)="searchControl.setValue('')">
         <mat-icon>close</mat-icon>
       </button>
     }
