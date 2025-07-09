@@ -1,8 +1,13 @@
+.page-header {
+  margin: 20px 14px;
+}
+
 .search-card {
   margin: 20px 14px;
   padding: 10px;
-  height: calc(100vh - 40px);
+  height: calc(100vh - 97.5px);
   background-color: white;
+  overflow-y: auto;
 }
 
 .spinner-overlay {

@@ -31,7 +31,6 @@ export class App {
       )
       .subscribe(resp => {
         this.dataSource.set(resp);
-        console.log(this.dataSource());
         this.isLoading.set(false);
       });
   }
