@@ -1,13 +1,13 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { delay, of, switchMap, tap } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTableModule } from '@angular/material/table';
+import { delay, of, switchMap, tap } from 'rxjs';
 
 import { GithubEmoji, SearchService } from './services/search.service';
 import { Search } from './components/search/search';
-import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-root',
