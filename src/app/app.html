@@ -1,6 +1,7 @@
 <h1 class="page-header">Github Emoji Search</h1>
+
 <mat-card class="search-card">
-  <app-search (searchControlValue)="valueChanges = $event" />
+  <app-search />
   <table mat-table [dataSource]="dataSource()" class="mat-elevation-z8 demo-table">
     <ng-container matColumnDef="name">
       <th mat-header-cell *matHeaderCellDef>Name</th>
@@ -16,6 +17,9 @@
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    <div mat-row *matNoDataRow>
+      <h3 class="no-results">No Results Found</h3>
+    </div>
   </table>
 </mat-card>
 

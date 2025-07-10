@@ -1,11 +1,12 @@
-<form>
-  <mat-form-field class="example-form-field" appearance="outline">
-    <mat-label>Input Search Term</mat-label>
-    <input matInput type="text" [formControl]="searchControl">
-    @if (searchControl.getRawValue()) {
-      <button matSuffix matIconButton aria-label="Clear" (click)="searchControl.setValue('')">
-        <mat-icon>close</mat-icon>
-      </button>
-    }
-  </mat-form-field>
-</form>
+<mat-form-field class="search-form-field" appearance="outline">
+  <mat-label>Input Search Term</mat-label>
+  <input matInput type="text" [formControl]="searchControl">
+  @if (searchControl.getRawValue()) {
+    <button matSuffix matIconButton aria-label="Clear" (click)="clearInput($event)">
+      <mat-icon>close</mat-icon>
+    </button>
+  }
+  @if (searchControl.hasError('minlength') && searchControl.dirty) {
+    <mat-error>Please enter a valid email address</mat-error>
+  }
+</mat-form-field>

@@ -1,12 +1,13 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { debounceTime, delay, distinctUntilChanged, filter, Observable, switchMap, tap } from 'rxjs';
+import { delay, of, switchMap, tap } from 'rxjs';
 import { MatCardModule } from '@angular/material/card';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTableModule } from '@angular/material/table';
 
 import { GithubEmoji, SearchService } from './services/search.service';
 import { Search } from './components/search/search';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -14,21 +15,16 @@ import { Search } from './components/search/search';
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })
-export class App {
-  searchService = inject(SearchService);
-  displayedColumns: string[] = ['name', 'image'];
+export class App implements OnInit {
   dataSource = signal<GithubEmoji[]>([]);
-  valueChanges: Observable<string> | undefined;
+  displayedColumns: string[] = ['name', 'image'];
   isLoading = signal(false);
+  private route = inject(ActivatedRoute);
+  private searchService = inject(SearchService);
 
-  ngAfterViewInit() {
-    this.valueChanges!
-      .pipe(
-        debounceTime(300),
-        distinctUntilChanged(),
-        filter((searchTerm: string) => searchTerm.length >= 3),
-        switchMap((searchTerm: string) => this.fetchData(searchTerm))
-      )
+  ngOnInit() {
+    this.route.queryParams
+      .pipe(switchMap(params => this.fetchData(params['q'])))
       .subscribe(resp => {
         this.dataSource.set(resp);
         this.isLoading.set(false);
@@ -36,6 +32,8 @@ export class App {
   }
 
   private fetchData(searchTerm: string) {
+    if (searchTerm?.length < 3) return of([]);
+
     return this.searchService.getJsonData(searchTerm)
       .pipe(
         tap(() => this.isLoading.set(true)),

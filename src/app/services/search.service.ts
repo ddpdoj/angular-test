@@ -16,7 +16,7 @@ export class SearchService {
   getJsonData(searchValue: string): Observable<GithubEmoji[]> {
     return this.http.get('data.json').pipe(
       map((resp: any) => Object.keys(resp)
-        .filter((key: string) => key.toLowerCase().includes(searchValue.toLowerCase()))
+        .filter((key: string) => key.toLowerCase().includes(searchValue?.toLowerCase()))
         .map((key: string) => ({ name: key, image: resp[key] })))
     );
   }
