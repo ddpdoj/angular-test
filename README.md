@@ -1,5 +1,7 @@
 # AngularTest
 
+The goal of this project is to create a component that allows a user to perform a search on a mocked set of data. A pre-generated list of Github emojis was used for this particular project, with the search being performed on emojis' names. A reusable `search` component was created to encapsulate some basic search field functionality, while the remainder of the logic was housed in the `app` component as well as a `search.service`.
+
 This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.0.5.
 
 ## Development server
@@ -7,52 +9,18 @@ This project was generated using [Angular CLI](https://github.com/angular/angula
 To start a local development server, run:
 
 ```bash
-ng serve
+npm start
 ```
 
 Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
 
-## Code scaffolding
+## Challenges
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+Instead of generating a data set to search on, it was decided that a pre-generated set of data would be used. Finding a well-formated set of data was more time consuming than was anticipated.
 
-```bash
-ng generate component component-name
-```
+## Assumptions
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+It was assumed that the term "Product" could be used to describe nearly any set of data, including a list of Gihub emojis. It was also assumed that no real routing mechanism was needed for this task, as it is a single page dedicated to a single task. Some basic routing was still used to accomplish the query string requirement.
 
 ## Additional Resources
 
